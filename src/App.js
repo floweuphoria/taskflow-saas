@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { User, Lock, Mail, Plus, CheckCircle, Clock, Users, BarChart3, Settings, LogOut, Eye, EyeOff } from 'lucide-react';
 
+// Add inline styles as fallback
+const inlineStyles = `
+  .app-container { min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  .login-bg { background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #4338ca 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .login-card { background: white; border-radius: 1rem; box-shadow: 0 25px 50px rgba(0,0,0,0.25); padding: 2rem; width: 100%; max-width: 400px; }
+  .logo-container { background: linear-gradient(135deg, #2563eb, #7c3aed); width: 4rem; height: 4rem; border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .input-group { margin-bottom: 1.5rem; }
+  .input-label { display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
+  .input-field { width: 100%; padding: 0.75rem 1rem; padding-left: 2.5rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 1rem; }
+  .input-field:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+  .btn-primary { width: 100%; background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; padding: 0.75rem; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-size: 1rem; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .demo-box { background: #f9fafb; padding: 1rem; border-radius: 0.5rem; margin-top: 1.5rem; }
+`;
+
 const TaskFlowApp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -80,69 +95,72 @@ const TaskFlowApp = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
-          <div className="text-center mb-8">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <BarChart3 className="w-8 h-8 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">TaskFlow</h1>
-            <p className="text-gray-600">Streamline your project management</p>
-          </div>
-
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="email"
-                  value={loginForm.email}
-                  onChange={(e) => setLoginForm({...loginForm, email: e.target.value})}
-                  onKeyPress={(e) => e.key === 'Enter' && handleLogin(e)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter your email"
-                />
+      <div>
+        <style>{inlineStyles}</style>
+        <div className="login-bg">
+          <div className="login-card">
+            <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+              <div className="logo-container">
+                <BarChart3 style={{width: '2rem', height: '2rem', color: 'white'}} />
               </div>
+              <h1 style={{fontSize: '2rem', fontWeight: 'bold', color: '#111827', marginBottom: '0.5rem'}}>TaskFlow</h1>
+              <p style={{color: '#6b7280'}}>Streamline your project management</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={loginForm.password}
-                  onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
-                  onKeyPress={(e) => e.key === 'Enter' && handleLogin(e)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
+              <div className="input-group">
+                <label className="input-label">Email</label>
+                <div style={{position: 'relative'}}>
+                  <Mail style={{position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af', width: '1.25rem', height: '1.25rem'}} />
+                  <input
+                    type="email"
+                    value={loginForm.email}
+                    onChange={(e) => setLoginForm({...loginForm, email: e.target.value})}
+                    onKeyPress={(e) => e.key === 'Enter' && handleLogin(e)}
+                    className="input-field"
+                    placeholder="Enter your email"
+                  />
+                </div>
               </div>
+
+              <div className="input-group">
+                <label className="input-label">Password</label>
+                <div style={{position: 'relative'}}>
+                  <Lock style={{position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af', width: '1.25rem', height: '1.25rem'}} />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={loginForm.password}
+                    onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
+                    onKeyPress={(e) => e.key === 'Enter' && handleLogin(e)}
+                    className="input-field"
+                    placeholder="Enter your password"
+                    style={{paddingRight: '3rem'}}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer'}}
+                  >
+                    {showPassword ? <EyeOff style={{width: '1.25rem', height: '1.25rem'}} /> : <Eye style={{width: '1.25rem', height: '1.25rem'}} />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleLogin}
+                className="btn-primary"
+              >
+                Sign In
+              </button>
+
             </div>
 
-            <button
-              type="button"
-              onClick={handleLogin}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
-            >
-              Sign In
-            </button>
-
-          </div>
-
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-2">Demo Credentials:</p>
-            <p className="text-xs text-gray-500">Email: demo@taskflow.com</p>
-            <p className="text-xs text-gray-500">Password: password123</p>
+            <div className="demo-box">
+              <p style={{fontSize: '0.875rem', color: '#6b7280', marginBottom: '0.5rem'}}>Demo Credentials:</p>
+              <p style={{fontSize: '0.75rem', color: '#6b7280'}}>Email: demo@taskflow.com</p>
+              <p style={{fontSize: '0.75rem', color: '#6b7280'}}>Password: password123</p>
+            </div>
           </div>
         </div>
       </div>
